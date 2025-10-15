@@ -367,134 +367,141 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 },
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.screenWidth * 0.03,
-                  vertical: context.screenHeight * 0.02,
-                ),
-
+                padding: const EdgeInsets.symmetric(vertical: 15),
                 child: Column(
                   spacing: 20,
                   children: [
-                    CustomButton(
-                      text: 'Edit Profile',
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          RoutesName.personalDataScreen,
-                        );
-                      },
-                      height: 42,
-                      textColor: AppColors.primary,
-                      backgroundColor: AppColors.white,
-                      borderColor: AppColors.primary,
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.screenWidth * 0.03,
+                      ),
+                      child: CustomButton(
+                        text: 'Edit Profile',
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            RoutesName.personalDataScreen,
+                          );
+                        },
+                        height: 42,
+                        textColor: AppColors.primary,
+                        backgroundColor: AppColors.white,
+                        borderColor: AppColors.primary,
+                      ),
                     ),
 
-                    Consumer<SelectionProvider>(
-                      builder: (context, selectionProvider, child) {
-                        return Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: AppColors.lightGrey,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      selectionProvider.selectOption(0);
-                                    },
-                                    child: AnimatedContainer(
-                                      duration: const Duration(
-                                        milliseconds: 200,
-                                      ),
-                                      curve: Curves.easeInOut,
-                                      decoration: BoxDecoration(
-                                        color: selectionProvider.isSelected(0)
-                                            ? AppColors.primary
-                                            : AppColors.white,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                          vertical: 10,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Posts',
-                                              style: pjsStyleBlack14700
-                                                  .copyWith(
-                                                    color:
-                                                        selectionProvider
-                                                            .isSelected(0)
-                                                        ? AppColors.white
-                                                        : AppColors.darkGrey,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Flexible(
-                                  flex: 1,
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      selectionProvider.selectOption(1);
-                                    },
-                                    child: AnimatedContainer(
-                                      duration: const Duration(
-                                        milliseconds: 200,
-                                      ),
-                                      curve: Curves.easeInOut,
-                                      decoration: BoxDecoration(
-                                        color: selectionProvider.isSelected(1)
-                                            ? AppColors.primary
-                                            : AppColors.white,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 10,
-                                          vertical: 10,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Travel',
-                                              style: pjsStyleBlack14700
-                                                  .copyWith(
-                                                    color:
-                                                        selectionProvider
-                                                            .isSelected(1)
-                                                        ? AppColors.white
-                                                        : AppColors.darkGrey,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.screenWidth * 0.03,
+                      ),
+                      child: Consumer<SelectionProvider>(
+                        builder: (context, selectionProvider, child) {
+                          return Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: AppColors.lightGrey.withOpacity(0.70),
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                          ),
-                        );
-                      },
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    flex: 1,
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        selectionProvider.selectOption(0);
+                                      },
+                                      child: AnimatedContainer(
+                                        duration: const Duration(
+                                          milliseconds: 200,
+                                        ),
+                                        curve: Curves.easeInOut,
+                                        decoration: BoxDecoration(
+                                          color: selectionProvider.isSelected(0)
+                                              ? AppColors.primary
+                                              : AppColors.white,
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                            vertical: 10,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Posts',
+                                                style: pjsStyleBlack14700
+                                                    .copyWith(
+                                                      color:
+                                                          selectionProvider
+                                                              .isSelected(0)
+                                                          ? AppColors.white
+                                                          : AppColors.darkGrey,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Flexible(
+                                    flex: 1,
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        selectionProvider.selectOption(1);
+                                      },
+                                      child: AnimatedContainer(
+                                        duration: const Duration(
+                                          milliseconds: 200,
+                                        ),
+                                        curve: Curves.easeInOut,
+                                        decoration: BoxDecoration(
+                                          color: selectionProvider.isSelected(1)
+                                              ? AppColors.primary
+                                              : AppColors.white,
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 10,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Travel',
+                                                style: pjsStyleBlack14700
+                                                    .copyWith(
+                                                      color:
+                                                          selectionProvider
+                                                              .isSelected(1)
+                                                          ? AppColors.white
+                                                          : AppColors.darkGrey,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     Consumer<SelectionProvider>(
                       builder: (context, selectionProvider, child) {
@@ -615,28 +622,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           return Column(
                             spacing: 15,
                             children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      'Travel Memories',
-                                      style: pjsStyleBlack16500,
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: context.screenWidth * 0.03,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        'Travel Memories',
+                                        style: pjsStyleBlack16500,
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: CustomButton(
-                                      text: 'Create Memory',
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          RoutesName.addMemoryScreen,
-                                        );
-                                      },
-                                      height: 30,
+                                    Expanded(
+                                      child: CustomButton(
+                                        text: 'Create Memory',
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            RoutesName.addMemoryScreen,
+                                          );
+                                        },
+                                        height: 30,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               Consumer<MemoryProvider>(
                                 builder: (context, memoryProvider, child) {
@@ -753,9 +765,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           itemBuilder: (context, index) {
                                             final memory = memories[index];
                                             return Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 8,
-                                                bottom: 5,
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: context.screenWidth * 0.03,
                                               ),
                                               child: PlaceCard(
                                                 onTap: () {
@@ -798,33 +809,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   Consumer<UserProfileProvider>(
                                     builder: (context, userProfileProvider, child) {
-                                      return Row(
-                                        children: [
-                                          InfoCard(
-                                            svgAsset: AppImages.word,
-                                            number:
-                                                "${userProfileProvider.visitedCountriesCount}",
-                                            title: "Countries",
-                                            subtitle:
-                                                "${userProfileProvider.getFormattedPercentage().toStringAsFixed(0)}% of the world",
-                                          ),
-                                          SizedBox(width: 16),
-                                          FutureBuilder<int>(
-                                            future: userProfileProvider
-                                                .getVisitedContinentsCount(),
-                                            builder: (context, snapshot) {
-                                              final continentsCount =
-                                                  snapshot.data ?? 0;
-                                              return InfoCard(
-                                                svgAsset:
-                                                    AppImages.locationIcon,
-                                                number: "$continentsCount",
-                                                title: "Continents",
-                                                subtitle: "out of 7",
-                                              );
-                                            },
-                                          ),
-                                        ],
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: context.screenWidth * 0.03,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            InfoCard(
+                                              svgAsset: AppImages.word,
+                                              number:
+                                                  "${userProfileProvider.visitedCountriesCount}",
+                                              title: "Countries",
+                                              subtitle:
+                                                  "${userProfileProvider.getFormattedPercentage().toStringAsFixed(0)}% of the world",
+                                            ),
+                                            SizedBox(width: 16),
+                                            FutureBuilder<int>(
+                                              future: userProfileProvider
+                                                  .getVisitedContinentsCount(),
+                                              builder: (context, snapshot) {
+                                                final continentsCount =
+                                                    snapshot.data ?? 0;
+                                                return InfoCard(
+                                                  svgAsset:
+                                                      AppImages.locationIcon,
+                                                  number: "$continentsCount",
+                                                  title: "Continents",
+                                                  subtitle: "out of 7",
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
                                       );
                                     },
                                   ),
@@ -850,140 +866,162 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             explorerTarget,
                                           );
 
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(
-                                            16,
-                                          ),
-                                          border: Border.all(
-                                            color: Colors.grey.shade300,
-                                          ),
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: context.screenWidth * 0.03,
                                         ),
-                                        padding: const EdgeInsets.all(16),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            // Title + Percentage Row
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "World Progress",
-                                                  style: pjsStyleBlack14700
-                                                      .copyWith(
-                                                        color:
-                                                            AppColors.primary,
-                                                      ),
-                                                ),
-                                                Text(
-                                                  "$percentage%",
-                                                  style: pjsStyleBlack14700
-                                                      .copyWith(
-                                                        color:
-                                                            AppColors.primary,
-                                                      ),
-                                                ),
-                                              ],
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                              16,
                                             ),
-
-                                            const SizedBox(height: 12),
-
-                                            // Progress Bar
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              child: LinearProgressIndicator(
-                                                value: progress,
-                                                minHeight: 14,
-                                                backgroundColor:
-                                                    Colors.grey.shade300,
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                      Color
-                                                    >(AppColors.primary),
-                                              ),
+                                            border: Border.all(
+                                              color: Colors.grey.shade300,
                                             ),
-
-                                            const SizedBox(height: 12),
-
-                                            // Remaining Text
-                                            Text(
-                                              remaining == 0
-                                                  ? '🎉 You are now a World Explorer!'
-                                                  : 'Visit $remaining more countries to become a world explorer',
-                                              style: pjsStyleBlack14400
-                                                  .copyWith(
-                                                    color: AppColors.darkGrey,
+                                          ),
+                                          padding: const EdgeInsets.all(16),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              // Title + Percentage Row
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "World Progress",
+                                                    style: pjsStyleBlack14700
+                                                        .copyWith(
+                                                          color:
+                                                              AppColors.primary,
+                                                        ),
                                                   ),
-                                            ),
-                                          ],
+                                                  Text(
+                                                    "$percentage%",
+                                                    style: pjsStyleBlack14700
+                                                        .copyWith(
+                                                          color:
+                                                              AppColors.primary,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+
+                                              const SizedBox(height: 12),
+
+                                              // Progress Bar
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                child: LinearProgressIndicator(
+                                                  value: progress,
+                                                  minHeight: 14,
+                                                  backgroundColor:
+                                                      Colors.grey.shade300,
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                        Color
+                                                      >(AppColors.primary),
+                                                ),
+                                              ),
+
+                                              const SizedBox(height: 12),
+
+                                              // Remaining Text
+                                              Text(
+                                                remaining == 0
+                                                    ? '🎉 You are now a World Explorer!'
+                                                    : 'Visit $remaining more countries to become a world explorer',
+                                                style: pjsStyleBlack14400
+                                                    .copyWith(
+                                                      color: AppColors.darkGrey,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       );
                                     },
                                   ),
-                                  Container(
-                                    width: double.infinity,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: AppColors.borderShad,
-                                        width: 1,
-                                      ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: context.screenWidth * 0.03,
                                     ),
-
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        top: 10,
-                                        left: 10,
-                                        right: 10,
-                                        bottom: 5,
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: AppColors.borderShad,
+                                          width: 1,
+                                        ),
                                       ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            spacing: 5,
-                                            children: [
-                                              Expanded(
-                                                flex: 3,
-                                                child: Text(
-                                                  'Countries Visited',
-                                                  style: pjsStyleBlack20700
-                                                      .copyWith(
-                                                        color: AppColors.black,
-                                                      ),
+
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 10,
+                                          left: 10,
+                                          right: 10,
+                                          bottom: 5,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              spacing: 5,
+                                              children: [
+                                                Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    'Countries Visited',
+                                                    style: pjsStyleBlack20700
+                                                        .copyWith(
+                                                          color: AppColors.black,
+                                                        ),
+                                                  ),
                                                 ),
-                                              ),
-                                              Expanded(
-                                                child: CustomButton(
-                                                  height: 30,
-                                                  padding: 2,
-                                                  text: 'Manage',
-                                                  onTap: () {
-                                                    Navigator.pushNamed(
-                                                      context,
-                                                      RoutesName
-                                                          .countriesIVisitedScreen,
-                                                    );
-                                                  },
+                                                Expanded(
+                                                  child: CustomButton(
+                                                    height: 30,
+                                                    padding: 2,
+                                                    text: 'Manage',
+                                                    onTap: () {
+                                                      showModalBottomSheet(
+                                                        context: context,
+                                                        isScrollControlled: true,
+                                                        backgroundColor: Colors.white,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.only(
+                                                            topLeft: Radius.circular(20),
+                                                            topRight: Radius.circular(20),
+                                                          ),
+                                                        ),
+                                                        builder: (BuildContext context) {
+                                                          return SizedBox(
+                                                            height: context.screenHeight * 0.9,
+                                                            child: AddCountriesScreen(),
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 145,
-                                            child: WorldMapScreen(),
-                                          ),
-                                        ],
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 145,
+                                              child: WorldMapScreen(),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -995,76 +1033,81 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             return const SizedBox();
                                           final user =
                                               userProfileProvider.currentUser;
-                                          return Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.borderShad,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: Colors.white,
-                                            ),
+                                          return Padding(
                                             padding: EdgeInsets.symmetric(
-                                              horizontal:
-                                                  context.screenWidth * 0.05,
-                                              vertical:
-                                                  context.screenHeight * 0.02,
+                                              horizontal: context.screenWidth * 0.03,
                                             ),
-                                            child: Column(
-                                              spacing: 10,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'About',
-                                                  style: pjsStyleBlack14700
-                                                      .copyWith(
-                                                        color:
-                                                            AppColors.primary,
-                                                      ),
+                                            child: Container(
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: AppColors.borderShad,
                                                 ),
-                                                Row(
-                                                  spacing: 3,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        user!.bio ?? '',
-                                                        style: pjsStyleBlack10400
-                                                            .copyWith(
-                                                              color: AppColors
-                                                                  .garyModern400,
-                                                            ),
-                                                        textAlign:
-                                                            TextAlign.justify,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  width:
-                                                      context.screenWidth * 0.2,
-                                                  child: CustomButton(
-                                                    height: 30,
-                                                    padding: 2,
-                                                    text: 'Edit',
-                                                    onTap: () {
-                                                      Navigator.pushNamed(
-                                                        context,
-                                                        RoutesName
-                                                            .personalDataScreen,
-                                                      );
-                                                    },
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.white,
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal:
+                                                    context.screenWidth * 0.05,
+                                                vertical:
+                                                    context.screenHeight * 0.02,
+                                              ),
+                                              child: Column(
+                                                spacing: 10,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'About',
+                                                    style: pjsStyleBlack14700
+                                                        .copyWith(
+                                                          color:
+                                                              AppColors.primary,
+                                                        ),
                                                   ),
-                                                ),
-                                              ],
+                                                  Row(
+                                                    spacing: 3,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          user!.bio ?? '',
+                                                          style: pjsStyleBlack10400
+                                                              .copyWith(
+                                                                color: AppColors
+                                                                    .garyModern400,
+                                                              ),
+                                                          textAlign:
+                                                              TextAlign.justify,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    width:
+                                                        context.screenWidth * 0.2,
+                                                    child: CustomButton(
+                                                      height: 30,
+                                                      padding: 2,
+                                                      text: 'Edit',
+                                                      onTap: () {
+                                                        Navigator.pushNamed(
+                                                          context,
+                                                          RoutesName
+                                                              .personalDataScreen,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           );
                                         },
@@ -1089,89 +1132,94 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         },
                                       );
                                     },
-                                    child: Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: AppColors.borderShad,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white,
-                                      ),
+                                    child: Padding(
                                       padding: EdgeInsets.symmetric(
-                                        horizontal: context.screenWidth * 0.05,
-                                        vertical: context.screenHeight * 0.02,
+                                        horizontal: context.screenWidth * 0.03,
                                       ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                      child: Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: AppColors.borderShad,
+                                          ),
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.white,
+                                        ),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: context.screenWidth * 0.05,
+                                          vertical: context.screenHeight * 0.02,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
 
-                                        children: [
-                                          Row(
-                                            spacing: 5,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Expanded(
-                                                flex: 1,
-                                                child: CircleAvatar(
-                                                  backgroundColor:
-                                                      AppColors.primary,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                          8.0,
-                                                        ),
-                                                    child: SvgPicture.asset(
-                                                      AppImages.locationIcon,
-                                                      color: AppColors.white,
+                                          children: [
+                                            Row(
+                                              spacing: 5,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: CircleAvatar(
+                                                    backgroundColor:
+                                                        AppColors.primary,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                            8.0,
+                                                          ),
+                                                      child: SvgPicture.asset(
+                                                        AppImages.locationIcon,
+                                                        color: AppColors.white,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                              Expanded(
-                                                flex: 4,
-                                                child: Column(
-                                                  spacing: 5,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      'My Countries',
-                                                      style: pjsStyleBlack14700
-                                                          .copyWith(
-                                                            color: AppColors
-                                                                .primary,
-                                                          ),
-                                                    ),
+                                                Expanded(
+                                                  flex: 4,
+                                                  child: Column(
+                                                    spacing: 5,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'My Countries',
+                                                        style: pjsStyleBlack14700
+                                                            .copyWith(
+                                                              color: AppColors
+                                                                  .primary,
+                                                            ),
+                                                      ),
 
-                                                    Text(
-                                                      'and non-UN Territories',
-                                                      style: pjsStyleBlack10400
-                                                          .copyWith(
-                                                            color: AppColors
-                                                                .garyModern400,
-                                                          ),
-                                                    ),
-                                                  ],
+                                                      Text(
+                                                        'and non-UN Territories',
+                                                        style: pjsStyleBlack10400
+                                                            .copyWith(
+                                                              color: AppColors
+                                                                  .garyModern400,
+                                                            ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: SvgPicture.asset(
-                                                  AppImages.forward,
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: SvgPicture.asset(
+                                                    AppImages.forward,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

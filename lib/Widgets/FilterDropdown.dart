@@ -44,6 +44,7 @@ class FilterDropdown extends StatelessWidget {
             return items.map((String value) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(value, style: pjsStyleBlack14400),
                   SvgPicture.asset(

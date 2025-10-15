@@ -72,7 +72,7 @@ class _FestivalsEventsState extends State<FestivalsEvents> {
                     return Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: AppColors.lightGrey,
+                        color: AppColors.lightGrey.withOpacity(0.70),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Padding(

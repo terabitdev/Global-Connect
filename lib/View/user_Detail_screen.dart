@@ -493,247 +493,256 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: context.screenWidth * 0.03,
                   vertical: context.screenHeight * 0.02,
                 ),
                 child: Column(
                   spacing: 10,
                   children: [
-                    Row(
-                      spacing: 5,
-                      children: [
-                        Consumer<UserDetailProvider>(
-                          builder: (context, userDetailProvider, child) {
-                            final buttonText = userDetailProvider
-                                .getConnectionButtonText();
-                            final isPending =
-                                userDetailProvider.connectionStatus ==
-                                ConnectionStatus.pending;
-                            final isConnected =
-                                userDetailProvider.connectionStatus ==
-                                ConnectionStatus.accepted;
-                            final isLongText = buttonText.length > 10;
-                            return Flexible(
-                              flex: isLongText ? 2 : 1,
-                              fit: FlexFit.loose,
-                              child: CustomButton(
-                                text: buttonText,
-                                onTap: () async {
-                                  final currentStatus =
-                                      userDetailProvider.connectionStatus;
-                                  try {
-                                    await userDetailProvider.toggleConnection(
-                                      widget.user,
-                                    );
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.screenWidth * 0.03,
+                      ),
+                      child: Row(
+                        spacing: 5,
+                        children: [
+                          Consumer<UserDetailProvider>(
+                            builder: (context, userDetailProvider, child) {
+                              final buttonText = userDetailProvider
+                                  .getConnectionButtonText();
+                              final isPending =
+                                  userDetailProvider.connectionStatus ==
+                                  ConnectionStatus.pending;
+                              final isConnected =
+                                  userDetailProvider.connectionStatus ==
+                                  ConnectionStatus.accepted;
+                              final isLongText = buttonText.length > 10;
+                              return Flexible(
+                                flex: isLongText ? 2 : 1,
+                                fit: FlexFit.loose,
+                                child: CustomButton(
+                                  text: buttonText,
+                                  onTap: () async {
+                                    final currentStatus =
+                                        userDetailProvider.connectionStatus;
+                                    try {
+                                      await userDetailProvider.toggleConnection(
+                                        widget.user,
+                                      );
 
-                                    if (context.mounted) {
-                                      switch (currentStatus) {
-                                        case ConnectionStatus.none:
-                                          CustomSnackBar.showSuccess(
-                                            context,
-                                            'Connection request sent!',
-                                          );
-                                          break;
-                                        case ConnectionStatus.pending:
-                                          CustomSnackBar.showWarning(
-                                            context,
-                                            'Connection request cancelled',
-                                          );
-                                          break;
-                                        case ConnectionStatus.accepted:
-                                          CustomSnackBar.showWarning(
-                                            context,
-                                            'Connection removed',
-                                          );
-                                          break;
+                                      if (context.mounted) {
+                                        switch (currentStatus) {
+                                          case ConnectionStatus.none:
+                                            CustomSnackBar.showSuccess(
+                                              context,
+                                              'Connection request sent!',
+                                            );
+                                            break;
+                                          case ConnectionStatus.pending:
+                                            CustomSnackBar.showWarning(
+                                              context,
+                                              'Connection request cancelled',
+                                            );
+                                            break;
+                                          case ConnectionStatus.accepted:
+                                            CustomSnackBar.showWarning(
+                                              context,
+                                              'Connection removed',
+                                            );
+                                            break;
+                                        }
+                                      }
+                                    } catch (e) {
+                                      if (context.mounted) {
+                                        CustomSnackBar.showFailure(
+                                          context,
+                                          'Error: ${e.toString()}',
+                                        );
                                       }
                                     }
-                                  } catch (e) {
-                                    if (context.mounted) {
-                                      CustomSnackBar.showFailure(
-                                        context,
-                                        'Error: ${e.toString()}',
-                                      );
-                                    }
-                                  }
-                                },
-                                backgroundColor: isConnected
-                                    ? AppColors.primary
-                                    : isPending
-                                    ? AppColors.primary
-                                    : AppColors.primary,
-                                textColor: AppColors.white,
-                                height: 40,
-                              ),
-                            );
-                          },
-                        ),
+                                  },
+                                  backgroundColor: isConnected
+                                      ? AppColors.primary
+                                      : isPending
+                                      ? AppColors.primary
+                                      : AppColors.primary,
+                                  textColor: AppColors.white,
+                                  height: 40,
+                                ),
+                              );
+                            },
+                          ),
 
-                        // Follow Button - flexible width
-                        Flexible(
-                          fit: FlexFit.loose,
-                          child: Consumer<UserDetailProvider>(
-                            builder: (context, userDetailProvider, child) {
-                              if (!userDetailProvider.hasCheckedStatus &&
-                                  userDetailProvider.isLoading) {
+                          // Follow Button - flexible width
+                          Flexible(
+                            fit: FlexFit.loose,
+                            child: Consumer<UserDetailProvider>(
+                              builder: (context, userDetailProvider, child) {
+                                if (!userDetailProvider.hasCheckedStatus &&
+                                    userDetailProvider.isLoading) {
+                                  return CustomButton(
+                                    text: 'Follow',
+                                    onTap: null,
+                                    backgroundColor: AppColors.white,
+                                    borderColor: AppColors.primary,
+                                    textColor: AppColors.primary,
+                                    height: 40,
+                                  );
+                                }
+
+                                final buttonText = userDetailProvider.getFollowButtonText();
+                                final isFollowing = userDetailProvider.isFollowing;
+
                                 return CustomButton(
-                                  text: 'Follow',
-                                  onTap: null,
-                                  backgroundColor: AppColors.white,
+                                  text: buttonText,
+                                  onTap: () {
+                                    userDetailProvider.toggleFollow(widget.user);
+                                  },
+                                  backgroundColor: isFollowing
+                                      ? AppColors.primary
+                                      : AppColors.white,
                                   borderColor: AppColors.primary,
-                                  textColor: AppColors.primary,
+                                  textColor: isFollowing
+                                      ? AppColors.white
+                                      : AppColors.primary,
                                   height: 40,
                                 );
-                              }
-
-                              final buttonText = userDetailProvider.getFollowButtonText();
-                              final isFollowing = userDetailProvider.isFollowing;
-
-                              return CustomButton(
-                                text: buttonText,
-                                onTap: () {
-                                  userDetailProvider.toggleFollow(widget.user);
-                                },
-                                backgroundColor: isFollowing
-                                    ? AppColors.primary
-                                    : AppColors.white,
-                                borderColor: AppColors.primary,
-                                textColor: isFollowing
-                                    ? AppColors.white
-                                    : AppColors.primary,
-                                height: 40,
-                              );
-                            },
-                          ),
-                        ),
-
-                        // Message Button - flexible width
-                        Flexible(
-                          fit: FlexFit.loose,
-                          child: CustomButton(
-                            text: 'Message',
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                RoutesName.chatScreen,
-                                arguments: {'user': widget.user, 'type': 'Private'},
-                              );
-                              print('Message button tapped');
-                            },
-                            backgroundColor: AppColors.white,
-                            borderColor: AppColors.garyModern400,
-                            textColor: AppColors.black,
-                            height: 40,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Consumer<SelectionProvider>(
-                      builder: (context, selectionProvider, child) {
-                        return Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: AppColors.lightGrey,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      selectionProvider.selectOption(0);
-                                    },
-                                    child: AnimatedContainer(
-                                      duration: const Duration(
-                                        milliseconds: 200,
-                                      ),
-                                      curve: Curves.easeInOut,
-                                      decoration: BoxDecoration(
-                                        color: selectionProvider.isSelected(0)
-                                            ? AppColors.primary
-                                            : AppColors.white,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                          vertical: 15,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Posts',
-                                              style: pjsStyleBlack14700
-                                                  .copyWith(
-                                                    color:
-                                                        selectionProvider
-                                                            .isSelected(0)
-                                                        ? AppColors.white
-                                                        : AppColors.darkGrey,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Flexible(
-                                  flex: 1,
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      selectionProvider.selectOption(1);
-                                    },
-                                    child: AnimatedContainer(
-                                      duration: const Duration(
-                                        milliseconds: 200,
-                                      ),
-                                      curve: Curves.easeInOut,
-                                      decoration: BoxDecoration(
-                                        color: selectionProvider.isSelected(1)
-                                            ? AppColors.primary
-                                            : AppColors.white,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 10,
-                                          vertical: 15,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Travel',
-                                              style: pjsStyleBlack14700
-                                                  .copyWith(
-                                                    color:
-                                                        selectionProvider
-                                                            .isSelected(1)
-                                                        ? AppColors.white
-                                                        : AppColors.darkGrey,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              },
                             ),
                           ),
-                        );
-                      },
+
+                          // Message Button - flexible width
+                          Flexible(
+                            fit: FlexFit.loose,
+                            child: CustomButton(
+                              text: 'Message',
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  RoutesName.chatScreen,
+                                  arguments: {'user': widget.user, 'type': 'Private'},
+                                );
+                                print('Message button tapped');
+                              },
+                              backgroundColor: AppColors.white,
+                              borderColor: AppColors.garyModern400,
+                              textColor: AppColors.black,
+                              height: 40,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.screenWidth * 0.03,
+                      ),
+                      child: Consumer<SelectionProvider>(
+                        builder: (context, selectionProvider, child) {
+                          return Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: AppColors.lightGrey,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    flex: 1,
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        selectionProvider.selectOption(0);
+                                      },
+                                      child: AnimatedContainer(
+                                        duration: const Duration(
+                                          milliseconds: 200,
+                                        ),
+                                        curve: Curves.easeInOut,
+                                        decoration: BoxDecoration(
+                                          color: selectionProvider.isSelected(0)
+                                              ? AppColors.primary
+                                              : AppColors.white,
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                            vertical: 8,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Posts',
+                                                style: pjsStyleBlack14700
+                                                    .copyWith(
+                                                      color:
+                                                          selectionProvider
+                                                              .isSelected(0)
+                                                          ? AppColors.white
+                                                          : AppColors.darkGrey,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Flexible(
+                                    flex: 1,
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        selectionProvider.selectOption(1);
+                                      },
+                                      child: AnimatedContainer(
+                                        duration: const Duration(
+                                          milliseconds: 200,
+                                        ),
+                                        curve: Curves.easeInOut,
+                                        decoration: BoxDecoration(
+                                          color: selectionProvider.isSelected(1)
+                                              ? AppColors.primary
+                                              : AppColors.white,
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 8,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Travel',
+                                                style: pjsStyleBlack14700
+                                                    .copyWith(
+                                                      color:
+                                                          selectionProvider
+                                                              .isSelected(1)
+                                                          ? AppColors.white
+                                                          : AppColors.darkGrey,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     Consumer<SelectionProvider>(
                       builder: (context, selectionProvider, child) {
@@ -806,286 +815,291 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             );
                           }
                         } else {
-                          return Column(
-                            spacing: 15,
-                            children: [
-                              StreamBuilder<DocumentSnapshot>(
-                                stream: FirebaseFirestore.instance
-                                    .collection('users')
-                                    .doc(widget.user.uid)
-                                    .snapshots(),
-                                builder: (context, snapshot) {
-                                  bool showTravelMap = true;
-                                  if (snapshot.hasData && snapshot.data != null) {
-                                    final userData = snapshot.data!.data() as Map<String, dynamic>?;
-                                    if (userData != null && userData.containsKey('appSettings')) {
-                                      final appSettings = userData['appSettings'] as Map<String, dynamic>?;
-                                      showTravelMap = appSettings?['showTravelStats'] ?? true;
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.screenWidth * 0.03,
+                            ),
+                            child: Column(
+                              spacing: 15,
+                              children: [
+                                StreamBuilder<DocumentSnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(widget.user.uid)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    bool showTravelMap = true;
+                                    if (snapshot.hasData && snapshot.data != null) {
+                                      final userData = snapshot.data!.data() as Map<String, dynamic>?;
+                                      if (userData != null && userData.containsKey('appSettings')) {
+                                        final appSettings = userData['appSettings'] as Map<String, dynamic>?;
+                                        showTravelMap = appSettings?['showTravelStats'] ?? true;
+                                      }
                                     }
-                                  }
-                                  if (!showTravelMap) {
-                                    return const SizedBox.shrink();
-                                  }
+                                    if (!showTravelMap) {
+                                      return const SizedBox.shrink();
+                                    }
 
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 2,
-                                            child: Text(
-                                              'Travel Memories',
-                                              style: pjsStyleBlack16500,
+                                    return Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 2,
+                                              child: Text(
+                                                'Travel Memories',
+                                                style: pjsStyleBlack16500,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 16,
-                                      ),
-                                      Consumer<MemoryProvider>(
-                                        builder: (context, memoryProvider, child) {
-                                          final memoriesStream = memoryProvider
-                                              .getSpecificUserMemoriesStream(
-                                            widget.user.uid,
-                                          );
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 16,
+                                        ),
+                                        Consumer<MemoryProvider>(
+                                          builder: (context, memoryProvider, child) {
+                                            final memoriesStream = memoryProvider
+                                                .getSpecificUserMemoriesStream(
+                                              widget.user.uid,
+                                            );
 
-                                          if (memoriesStream == null) {
-                                            return Column(
+                                            if (memoriesStream == null) {
+                                              return Column(
+                                                children: [
+                                                  SvgPicture.asset(AppImages.cameraIcon),
+                                                  const SizedBox(height: 16),
+                                                  Text(
+                                                    'No Travel Memories yet.',
+                                                    style: pjsStyleBlack14500.copyWith(
+                                                      color: AppColors.garyModern500,
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            }
+
+                                            return StreamBuilder<QuerySnapshot>(
+                                              stream: memoriesStream,
+                                              builder: (context, snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return const TravelMemoryShimmerWidget();
+                                                }
+
+                                                if (snapshot.hasError) {
+                                                  return Column(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        AppImages.cameraIcon,
+                                                        color: AppColors.primary,
+                                                      ),
+                                                      const SizedBox(height: 16),
+                                                      Text(
+                                                        'Error loading memories',
+                                                        style: pjsStyleBlack14500
+                                                            .copyWith(color: Colors.red),
+                                                      ),
+                                                    ],
+                                                  );
+                                                }
+
+                                                if (!snapshot.hasData ||
+                                                    snapshot.data!.docs.isEmpty) {
+                                                  return Column(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        AppImages.cameraIcon,
+                                                      ),
+                                                      const SizedBox(height: 16),
+                                                      Text(
+                                                        'No Travel Memories yet.',
+                                                        style: pjsStyleBlack14500
+                                                            .copyWith(
+                                                          color:
+                                                          AppColors.garyModern500,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                }
+
+                                                final memories = memoryProvider
+                                                    .convertSnapshotToMemories(
+                                                  snapshot.data!,
+                                                );
+
+                                                return SizedBox(
+                                                  height: 190,
+                                                  child: ListView.builder(
+                                                    scrollDirection: Axis.horizontal,
+                                                    itemCount: memories.length,
+                                                    itemBuilder: (context, index) {
+                                                      final memory = memories[index];
+                                                      return Padding(
+                                                        padding: const EdgeInsets.only(
+                                                          left: 8,
+                                                          bottom: 5,
+                                                        ),
+                                                        child: PlaceCard(
+                                                          onTap: () {
+                                                            Navigator.pushNamed(
+                                                              context,
+                                                              RoutesName
+                                                                  .travelMemoryScreen,
+                                                              arguments: memory,
+                                                            );
+                                                          },
+                                                          imageUrl:
+                                                          memory.coverImageUrl ??
+                                                              (memory
+                                                                  .mediaImageUrls
+                                                                  .isNotEmpty
+                                                                  ? memory
+                                                                  .mediaImageUrls
+                                                                  .first
+                                                                  : AppImages.onBoarding),
+                                                          isNetworkImage:
+                                                          memory.coverImageUrl !=
+                                                              null ||
+                                                              memory
+                                                                  .mediaImageUrls
+                                                                  .isNotEmpty,
+                                                          name: memory.memoryName,
+                                                          location: memory.country,
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+
+
+                                StreamBuilder<DocumentSnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(widget.user.uid)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    bool showTravelMap = true;
+                                    if (snapshot.hasData && snapshot.data != null) {
+                                      final userData = snapshot.data!.data() as Map<String, dynamic>?;
+                                      if (userData != null && userData.containsKey('appSettings')) {
+                                        final appSettings = userData['appSettings'] as Map<String, dynamic>?;
+                                        showTravelMap = appSettings?['showTravelMap'] ?? true;
+                                      }
+                                    }
+                                    if (!showTravelMap) {
+                                      return const SizedBox.shrink();
+                                    }
+
+                                    return Container(
+                                      width: double.infinity,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: AppColors.borderShad,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 10,
+                                          left: 10,
+                                          right: 10,
+                                          bottom: 5,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              spacing: 5,
                                               children: [
-                                                SvgPicture.asset(AppImages.cameraIcon),
-                                                const SizedBox(height: 16),
-                                                Text(
-                                                  'No Travel Memories yet.',
-                                                  style: pjsStyleBlack14500.copyWith(
-                                                    color: AppColors.garyModern500,
+                                                Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    'Countries Visited',
+                                                    style: pjsStyleBlack20700
+                                                        .copyWith(
+                                                          color: AppColors.black,
+                                                        ),
                                                   ),
                                                 ),
                                               ],
-                                            );
-                                          }
-
-                                          return StreamBuilder<QuerySnapshot>(
-                                            stream: memoriesStream,
-                                            builder: (context, snapshot) {
-                                              if (snapshot.connectionState ==
-                                                  ConnectionState.waiting) {
-                                                return const TravelMemoryShimmerWidget();
-                                              }
-
-                                              if (snapshot.hasError) {
-                                                return Column(
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                      AppImages.cameraIcon,
-                                                      color: AppColors.primary,
-                                                    ),
-                                                    const SizedBox(height: 16),
-                                                    Text(
-                                                      'Error loading memories',
-                                                      style: pjsStyleBlack14500
-                                                          .copyWith(color: Colors.red),
-                                                    ),
-                                                  ],
-                                                );
-                                              }
-
-                                              if (!snapshot.hasData ||
-                                                  snapshot.data!.docs.isEmpty) {
-                                                return Column(
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                      AppImages.cameraIcon,
-                                                    ),
-                                                    const SizedBox(height: 16),
-                                                    Text(
-                                                      'No Travel Memories yet.',
-                                                      style: pjsStyleBlack14500
-                                                          .copyWith(
-                                                        color:
-                                                        AppColors.garyModern500,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                );
-                                              }
-
-                                              final memories = memoryProvider
-                                                  .convertSnapshotToMemories(
-                                                snapshot.data!,
-                                              );
-
-                                              return SizedBox(
-                                                height: 190,
-                                                child: ListView.builder(
-                                                  scrollDirection: Axis.horizontal,
-                                                  itemCount: memories.length,
-                                                  itemBuilder: (context, index) {
-                                                    final memory = memories[index];
-                                                    return Padding(
-                                                      padding: const EdgeInsets.only(
-                                                        left: 8,
-                                                        bottom: 5,
-                                                      ),
-                                                      child: PlaceCard(
-                                                        onTap: () {
-                                                          Navigator.pushNamed(
-                                                            context,
-                                                            RoutesName
-                                                                .travelMemoryScreen,
-                                                            arguments: memory,
-                                                          );
-                                                        },
-                                                        imageUrl:
-                                                        memory.coverImageUrl ??
-                                                            (memory
-                                                                .mediaImageUrls
-                                                                .isNotEmpty
-                                                                ? memory
-                                                                .mediaImageUrls
-                                                                .first
-                                                                : AppImages.onBoarding),
-                                                        isNetworkImage:
-                                                        memory.coverImageUrl !=
-                                                            null ||
-                                                            memory
-                                                                .mediaImageUrls
-                                                                .isNotEmpty,
-                                                        name: memory.memoryName,
-                                                        location: memory.country,
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
+                                            ),
+                                            SizedBox(
+                                              height: 145,
+                                              child: WorldMapScreen(
+                                                userId: widget.user.uid,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ],
-                                  );
-                                },
-                              ),
+                                    );
+                                  },
+                                ),
 
-
-                              StreamBuilder<DocumentSnapshot>(
-                                stream: FirebaseFirestore.instance
-                                    .collection('users')
-                                    .doc(widget.user.uid)
-                                    .snapshots(),
-                                builder: (context, snapshot) {
-                                  bool showTravelMap = true;
-                                  if (snapshot.hasData && snapshot.data != null) {
-                                    final userData = snapshot.data!.data() as Map<String, dynamic>?;
-                                    if (userData != null && userData.containsKey('appSettings')) {
-                                      final appSettings = userData['appSettings'] as Map<String, dynamic>?;
-                                      showTravelMap = appSettings?['showTravelMap'] ?? true;
-                                    }
-                                  }
-                                  if (!showTravelMap) {
-                                    return const SizedBox.shrink();
-                                  }
-
-                                  return Container(
-                                    width: double.infinity,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: AppColors.borderShad,
-                                        width: 1,
-                                      ),
+                                Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: AppColors.borderShad,
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        top: 10,
-                                        left: 10,
-                                        right: 10,
-                                        bottom: 5,
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: context.screenWidth * 0.05,
+                                    vertical: context.screenHeight * 0.02,
+                                  ),
+                                  child: Column(
+                                    spacing: 10,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'About',
+                                        style: pjsStyleBlack14700.copyWith(
+                                          color: AppColors.primary,
+                                        ),
                                       ),
-                                      child: Column(
+                                      Row(
+                                        spacing: 3,
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Row(
-                                            spacing: 5,
-                                            children: [
-                                              Expanded(
-                                                flex: 3,
-                                                child: Text(
-                                                  'Countries Visited',
-                                                  style: pjsStyleBlack20700
-                                                      .copyWith(
-                                                        color: AppColors.black,
-                                                      ),
-                                                ),
+                                          Expanded(
+                                            child: Text(
+                                              widget.user.bio ??
+                                                  'No bio available',
+                                              style: pjsStyleBlack10400.copyWith(
+                                                color: AppColors.garyModern400,
                                               ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 145,
-                                            child: WorldMapScreen(
-                                              userId: widget.user.uid,
+                                              textAlign: TextAlign.justify,
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-
-                              Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: AppColors.borderShad,
+                                    ],
                                   ),
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white,
                                 ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: context.screenWidth * 0.05,
-                                  vertical: context.screenHeight * 0.02,
-                                ),
-                                child: Column(
-                                  spacing: 10,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'About',
-                                      style: pjsStyleBlack14700.copyWith(
-                                        color: AppColors.primary,
-                                      ),
-                                    ),
-                                    Row(
-                                      spacing: 3,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            widget.user.bio ??
-                                                'No bio available',
-                                            style: pjsStyleBlack10400.copyWith(
-                                              color: AppColors.garyModern400,
-                                            ),
-                                            textAlign: TextAlign.justify,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           );
                         }
                       },

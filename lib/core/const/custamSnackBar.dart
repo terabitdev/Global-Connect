@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:global_connect/core/theme/app_text_style.dart';
 import 'app_color.dart';
 
 class CustomSnackBar {
@@ -14,16 +15,14 @@ class CustomSnackBar {
               Expanded(
                 child: Text(
                   message,
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: pjsStyleBlack13600.copyWith(
+                    color: AppColors.white
+                  )
                 ),
               ),
             ],
           ),
-          backgroundColor: Colors.green,
+          backgroundColor: AppColors.green,
           duration: Duration(seconds: 2),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
@@ -33,6 +32,7 @@ class CustomSnackBar {
             top: 10,
             left: 10,
             right: 10,
+            bottom: 10
           ),
         ),
       );
@@ -70,6 +70,7 @@ class CustomSnackBar {
             top: 10,
             left: 10,
             right: 10,
+            bottom: 10
           ),
         ),
       );
@@ -97,7 +98,7 @@ class CustomSnackBar {
               ),
             ],
           ),
-          backgroundColor: Colors.orange,
+          backgroundColor:AppColors.green,
           duration: Duration(seconds: 2),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
@@ -107,6 +108,7 @@ class CustomSnackBar {
             top: 10,
             left: 10,
             right: 10,
+            bottom: 10
           ),
         ),
       );

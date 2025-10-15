@@ -73,7 +73,7 @@ class ShareTipsScreen extends StatelessWidget {
                               color: AppColors.garyModern400,
                             ),
                           ),
-                          icon: SvgPicture.asset(AppImages.downButton),
+                          icon: SvgPicture.asset(AppImages.downButton,  color: AppColors.primary),
                           items: [
                             'All Categories',
                             'Restaurants',
@@ -135,7 +135,8 @@ class ShareTipsScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    SvgPicture.asset(AppImages.downButton),
+                                    SvgPicture.asset(AppImages.downButton,
+                                        color: AppColors.primary),
                                   ],
                                 ),
                               ),

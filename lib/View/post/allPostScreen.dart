@@ -49,10 +49,10 @@ class _AllPostScreenState extends State<AllPostScreen> {
   // Helper method to format time ago
   String getTimeAgo(DateTime? dateTime) {
     if (dateTime == null) return 'Unknown time';
-    
+
     final now = DateTime.now();
     final difference = now.difference(dateTime);
-    
+
     if (difference.inDays > 0) {
       return '${difference.inDays}d ago';
     } else if (difference.inHours > 0) {
@@ -173,14 +173,14 @@ class _AllPostScreenState extends State<AllPostScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Expanded(
-                              flex: 1,
+                            Flexible(
+                              flex: (postProvider.selectedFilter.length > 9) ? 1 : 2,
                               child: Text('Feed', style: pjsStyleBlack20600),
                             ),
-                            Expanded(
+                            Flexible(
                               child: postProvider.isLoadingFeed
                                   ? Container(
-                                      height: 48,
+                                      //height: 45,
                                       padding: const EdgeInsets.symmetric(horizontal: 10),
                                       decoration: BoxDecoration(
                                         color: AppColors.white,
@@ -222,7 +222,7 @@ class _AllPostScreenState extends State<AllPostScreen> {
                   if (postProvider.isLoadingPosts && !postProvider.hasInitiallyLoaded)
                     // Show shimmer when initially loading
                     Column(
-                      children: List.generate(3, (index) => 
+                      children: List.generate(3, (index) =>
                         const Padding(
                           padding: EdgeInsets.only(bottom: 16),
                           child: PostCardShimmerWidget(),
@@ -270,15 +270,15 @@ class _AllPostScreenState extends State<AllPostScreen> {
                         final userData = postProvider.getCachedUserData(post.userId);
                         final userName = userData?['fullName'] ?? 'Loading...';
                         final userAvatar = userData?['profileImageUrl'] ?? '';
-                        final userLocation = post.location.address.isNotEmpty 
-                            ? post.location.address 
+                        final userLocation = post.location.address.isNotEmpty
+                            ? post.location.address
                             : 'Location not available';
 
                         return FutureBuilder<bool>(
                           future: postProvider.isPostLiked(post.postId, post.userId),
                           builder: (context, likeSnapshot) {
                             final isLiked = likeSnapshot.data ?? false;
-                            
+
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 10),
                               child: PostCard(

@@ -102,9 +102,7 @@ class _UserTipsScreenState extends State<UserTipsScreen> {
                     Consumer<UserTipsProvider>(
                       builder: (context, tipsProvider, child) {
                         return Padding(
-                          padding: EdgeInsets.only(
-                            right: 20
-                          ),
+                          padding: EdgeInsets.only(right: 20),
                           child: Row(
                             spacing: 10,
                             children: [
@@ -134,7 +132,9 @@ class _UserTipsScreenState extends State<UserTipsScreen> {
                                   svgAsset: AppImages.people,
                                   iconSize: 12,
                                   textStyle: pjsStyleBlack12600.copyWith(
-                                    color: AppColors.white,
+                                    color: !tipsProvider.showGlobalTips
+                                        ? AppColors.white
+                                        : AppColors.primary,
                                   ),
                                 ),
                               ),
@@ -157,6 +157,11 @@ class _UserTipsScreenState extends State<UserTipsScreen> {
                                   padding: 8,
                                   svgAsset: AppImages.word,
                                   iconSize: 12,
+                                  textStyle: pjsStyleBlack12600.copyWith(
+                                    color: !tipsProvider.showGlobalTips
+                                        ? AppColors.primary
+                                        : AppColors.white,
+                                  ),
                                 ),
                               ),
                             ],
@@ -170,7 +175,7 @@ class _UserTipsScreenState extends State<UserTipsScreen> {
                         return Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: AppColors.lightGrey,
+                            color: AppColors.lightGrey.withOpacity(0.70),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Padding(

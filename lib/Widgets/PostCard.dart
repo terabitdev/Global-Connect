@@ -270,8 +270,9 @@ class _PostCardState extends State<PostCard> with TickerProviderStateMixin {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
+                                spacing:10,
                                 children: [
-                                  Expanded(
+                                  Flexible(
                                     child: Text(
                                       widget.userName,
                                       style: pjsStyleBlack13600.copyWith(
@@ -280,10 +281,10 @@ class _PostCardState extends State<PostCard> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   const SizedBox(width: 10),
-                                  Expanded(
-                                    flex: 2,
+                                  Flexible(
+                                    flex: 1,
                                     child: Text(
-                                      "$flag ${widget.userLocation}",
+                                      "$flag  ${widget.userLocation}",
                                       style: pjsStyleBlack13600.copyWith(
                                         color: Colors.black,
                                       ),
@@ -291,120 +292,7 @@ class _PostCardState extends State<PostCard> with TickerProviderStateMixin {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                  const SizedBox(width: 5),
-                                  // Direct ownership check for instant response
-                                  PopupMenuButton<String>(
-                                    onSelected: (String value) {
-                                      if (value == 'edit' && widget.onEdit != null) {
-                                        widget.onEdit!(widget.postId);
-                                      } else if (value == 'delete' && widget.onDelete != null) {
-                                        widget.onDelete!(widget.postId);
-                                      } else if (value == 'report') {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) => ChangeNotifierProvider(
-                                            create: (context) => ReportProvider(),
-                                            child: ReportDialog(
-                                              contentId: widget.postId,
-                                              contentOwnerId: widget.postOwnerId,
-                                              contentType: ReportContentType.post,
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    offset: const Offset(-10, 35),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    elevation: 8,
-                                    surfaceTintColor: Colors.white,
-                                    color: Colors.white,
-                                    padding: const EdgeInsets.all(10),
-                                    child: SvgPicture.asset(
-                                      AppImages.dot,
-                                      width: 30,
-                                      height: 20,
-                                    ),
-                                    itemBuilder: (BuildContext context) => _isCurrentUserOwner
-                                        ? [
-                                            PopupMenuItem<String>(
-                                              onTap: () {
-                                                showModalBottomSheet(
-                                                  context: context,
-                                                  isScrollControlled: true,
-                                                  backgroundColor: Colors.white,
-                                                  shape: const RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.only(
-                                                      topLeft: Radius.circular(20),
-                                                      topRight: Radius.circular(20),
-                                                    ),
-                                                  ),
-                                                  builder: (BuildContext context) {
-                                                    return SizedBox(
-                                                      height: context.screenHeight * 0.9,
-                                                      child: EditPostScreen(
-                                                        postId: widget.postId,
-                                                        caption: widget.description,
-                                                        images: widget.postImages,
-                                                        location: widget.userLocation,
-                                                        latitude: widget.latitude,
-                                                        longitude: widget.longitude,
-                                                        hashtags: widget.hashtags,
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                              value: 'edit',
-                                              child: Container(
-                                                padding: const EdgeInsets.symmetric(
-                                                  vertical: 8,
-                                                  horizontal: 4,
-                                                ),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: [
-                                                    Text(
-                                                      'Edit Post',
-                                                      style: pjsStyleBlack14400.copyWith(
-                                                        color: Colors.grey[700],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ]
-                                        : [
-                                            PopupMenuItem<String>(
-                                              value: 'report',
-                                              child: Container(
-                                                padding: const EdgeInsets.symmetric(
-                                                  vertical: 8,
-                                                  horizontal: 4,
-                                                ),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.flag_outlined,
-                                                      size: 18,
-                                                      color: Colors.red[600],
-                                                    ),
-                                                    const SizedBox(width: 8),
-                                                    Text(
-                                                      'Report Post',
-                                                      style: pjsStyleBlack14400.copyWith(
-                                                        color: Colors.red[600],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                  ),
+
                                 ],
                               ),
                               Text(
@@ -416,6 +304,120 @@ class _PostCardState extends State<PostCard> with TickerProviderStateMixin {
                             ],
                           ),
                         ),
+                        const SizedBox(width: 5),
+                        PopupMenuButton<String>(
+                          onSelected: (String value) {
+                            if (value == 'edit' && widget.onEdit != null) {
+                              widget.onEdit!(widget.postId);
+                            } else if (value == 'delete' && widget.onDelete != null) {
+                              widget.onDelete!(widget.postId);
+                            } else if (value == 'report') {
+                              showDialog(
+                                context: context,
+                                builder: (context) => ChangeNotifierProvider(
+                                  create: (context) => ReportProvider(),
+                                  child: ReportDialog(
+                                    contentId: widget.postId,
+                                    contentOwnerId: widget.postOwnerId,
+                                    contentType: ReportContentType.post,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                          offset: const Offset(-10, 35),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 8,
+                          surfaceTintColor: Colors.white,
+                          color: Colors.white,
+                          padding: const EdgeInsets.all(10),
+                          child: SvgPicture.asset(
+                            AppImages.dot,
+                            width: 30,
+                            height: 20,
+                          ),
+                          itemBuilder: (BuildContext context) => _isCurrentUserOwner
+                              ? [
+                            PopupMenuItem<String>(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.white,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    ),
+                                  ),
+                                  builder: (BuildContext context) {
+                                    return SizedBox(
+                                      height: context.screenHeight * 0.9,
+                                      child: EditPostScreen(
+                                        postId: widget.postId,
+                                        caption: widget.description,
+                                        images: widget.postImages,
+                                        location: widget.userLocation,
+                                        latitude: widget.latitude,
+                                        longitude: widget.longitude,
+                                        hashtags: widget.hashtags,
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              value: 'edit',
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 4,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      'Edit Post',
+                                      style: pjsStyleBlack14400.copyWith(
+                                        color: Colors.grey[700],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ]
+                              : [
+                            PopupMenuItem<String>(
+                              value: 'report',
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 4,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.flag_outlined,
+                                      size: 18,
+                                      color: Colors.red[600],
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Report Post',
+                                      style: pjsStyleBlack14400.copyWith(
+                                        color: Colors.red[600],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 5),
                       ],
                     ),
                   ),
@@ -426,8 +428,7 @@ class _PostCardState extends State<PostCard> with TickerProviderStateMixin {
                     child: LayoutBuilder(
                       builder: (context, constraints) {
                         final availableWidth = constraints.maxWidth;
-                        final dynamicHeight = availableWidth * 1.3;
-                        
+                        final dynamicHeight = availableWidth * 1.1;
                         return CarouselSlider(
                           carouselController: _carouselController,
                           options: CarouselOptions(

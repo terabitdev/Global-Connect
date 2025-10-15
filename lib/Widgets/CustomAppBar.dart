@@ -158,3 +158,73 @@ class CustomAppBar2 extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+class CustomAppBar3 extends StatelessWidget implements PreferredSizeWidget {
+  final Widget title;
+  final VoidCallback? onBack;
+  final VoidCallback? onAdd;
+  final String text;
+  const CustomAppBar3({
+    super.key,
+    required this.text,
+    required this.title,
+    this.onBack,
+    this.onAdd,
+
+
+  });
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      centerTitle: true,
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 16.0),
+        child: CircleAvatar(
+          backgroundColor: AppColors.lightGrey.withOpacity(0.60),
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: onBack ?? () => Navigator.of(context).pop(),
+          ),
+        ),
+      ),
+      title: title,
+      actions: [
+        if (onAdd != null)
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: GestureDetector(
+              onTap: onAdd,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0,
+                        vertical: 8.0,
+                      ),
+                      child: Text(
+                        text,
+                        style: psjStyleBlack12400.copyWith(
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+      ],
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}

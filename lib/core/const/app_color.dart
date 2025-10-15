@@ -35,4 +35,5 @@ static const Color  darkBlue600 = Color(0xFF515978);
 
 static const Color  red = Color(0xFFFF0000);
 static const Color yellow =Colors.yellow;
+static const Color green =Color(0xFF24B75A);
 }

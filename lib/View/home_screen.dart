@@ -32,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // Initial location fetch
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final locationProvider = context.read<LocationProvider>();
       final userProvider = context.read<UserProfileProvider>();
@@ -43,8 +42,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       );
 
       locationProvider.refreshUserLocationAfterAuth();
-
-      // Only fetch location if we don't have it yet and not loading
       if (locationProvider.currentPosition == null &&
           !locationProvider.isLoading) {
         locationProvider.getCurrentLocation(context: context);
@@ -536,7 +533,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         return Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: AppColors.lightGrey,
+                            color: AppColors.lightGrey.withOpacity(0.70),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Padding(

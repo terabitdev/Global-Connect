@@ -37,7 +37,6 @@ void main() async {
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await NotificationService.instance.initialize();
-  
   // Initialize network monitoring
   await NetworkProvider().initialize();
 
